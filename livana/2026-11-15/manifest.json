@@ -1,0 +1,55 @@
+{
+ "date": "2026-11-15",
+ "account": "17841475505929053",
+ "slots": {
+  "09:30": [
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-1.jpg"
+   },
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-4.jpg"
+   }
+  ],
+  "12:30": [
+   {
+    "type": "carousel",
+    "image_urls": [
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/post-a1.jpg",
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/post-a2.jpg",
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/post-a3.jpg"
+    ],
+    "caption": "وديم غاردنز · فلل جزيرة الحديريات 🌿\nمجمع فلل من مُدن على جزيرة الحديريات. اسحب وشوف أبرز التفاصيل، و3 أسئلة تسألها عن التمويل قبل ما تقرر.\nمهتم بالحديريات؟ راسلنا ونرتب لك الخيارات 📩\n—\nWadeem Gardens villas on Hudayriyat Island: swipe for the key facts and 3 financing questions to ask first. DM us for options.\n#جزيرة_الحديريات #وديم_غاردنز #عقارات_ابوظبي #فلل_ابوظبي #AbuDhabiRealEstate #Hudayriyat #ليفانا_العقارية"
+   },
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-3.jpg"
+   }
+  ],
+  "16:30": [
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-5.jpg"
+   },
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-6.jpg"
+   }
+  ],
+  "19:30": [
+   {
+    "type": "image",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/backup-service-charges.jpg",
+    "caption": "رسوم الخدمات: اسأل قبل تشتري 🧾\nالرسوم السنوية تأثر مباشرة على عائدك الصافي. اعرف كم تدفع، وشو تشمل، وهل ارتفعت آخر كم سنة.\nاحفظ المنشور، ولو تبي نراجعها معك على عقار معيّن راسلنا 📩\n—\nService charges: ask before you buy. They come straight out of your net yield.\n#عقارات_ابوظبي #رسوم_الخدمات #استثمار_عقاري #AbuDhabiRealEstate #ليفانا_العقارية"
+   },
+   {
+    "type": "story",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/952be011ecccea7e35658dc636ab1042c050fca0/livana/2026-11-15/story-7.jpg"
+   }
+  ]
+ },
+ "manual": [
+  "story-2-poll.jpg (Ahmad posts with poll sticker)"
+ ]
+}
