@@ -2,50 +2,40 @@
  "date": "2026-11-21",
  "account": "17841475505929053",
  "slots": {
-  "09:30": [
-   {
-    "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-1.jpg"
-   },
-   {
-    "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-3.jpg"
-   }
-  ],
   "12:30": [
    {
     "type": "carousel",
     "image_urls": [
-     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/post-a1.jpg",
-     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/post-a2.jpg",
-     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/post-a3.jpg"
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-post-a1.jpg",
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-post-a2.jpg",
+     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-post-a3.jpg"
     ],
     "caption": "سوق أبوظبي في الربع الثالث 2026 📊\nقيمة المبيعات السكنية وصلت 26.4 مليار درهم، بارتفاع يقارب 40% عن السنة الماضية، مع إن عدد الصفقات أقل بـ 7.5%.\nأسعار الشقق +11% والفلل +8.9% على أساس سنوي. الريم (1,200 شقة) وياس (920 شقة) تصدّروا مبيعات الشقق، والحديريات (1,070) مبيعات الفلل.\nسوق أهدأ يعني وقت تشتري فيه بذكاء: قارن بآخر الصفقات، شوف موعد التسليم والمعروض حوله، واقرأ خطة الدفع قبل التوقيع.\nتبي نقرأ لك أرقام منطقة معيّنة؟ راسلنا 📩\n—\nAbu Dhabi residential, Q3 2026: sales value reached AED 26.4 billion, up nearly 40% year on year, while transactions fell 7.5%. Apartment prices +11%, villas +8.9%. Al Reem and Yas led apartment sales; Al Hudayriyat led villas. Expected supply: about 14,600 homes in 2027 and 24,200 in 2028 if delivered on schedule.\nSource: Cavendish Maxwell, Abu Dhabi residential market report Q3 2026 (published 18 Nov 2026). Photos are illustrative.\n#عقارات_أبوظبي #سوق_العقارات #أبوظبي #AbuDhabiRealEstate #AbuDhabiProperty #RealEstateMarket #AlReemIsland #YasIsland #LivanaRealEstate"
    },
    {
     "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-2.jpg"
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-story-teaser1.jpg"
    }
   ],
   "16:30": [
    {
     "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-4.jpg"
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-story-word.jpg"
    },
    {
     "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-5.jpg"
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-story-docs.jpg"
    }
   ],
   "19:30": [
    {
     "type": "image",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/post-b-before-signing.jpg",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-post-b1.jpg",
     "caption": "قبل ما توقّع اتفاقية البيع (MOU) راجع هالـ 4 ✍️\n1. ملكية البائع موثّقة\n2. العقار مرهون؟ رتّب فك الرهن\n3. العربون وشروط استرجاعه\n4. موعد النقل ومن يدفع الرسوم\nوكل اتفاق شفهي، اكتبه في العقد. احفظ المنشور وارجع له قبل أي توقيع، ولو تبي نراجعها معك راسلنا 📩\n—\nBefore signing a property MOU, check: verified seller ownership, any mortgage and how it will be released, deposit and refund terms, transfer date and who pays which fees. Put every verbal promise in writing.\nGeneral guidance, not legal advice.\n#عقارات_أبوظبي #نصائح_عقارية #شراء_عقار #AbuDhabiRealEstate #PropertyTips #HomeBuying #LivanaRealEstate"
    },
    {
     "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/c8ecbe163b6794e4f076cba7d3fdc8be6d4c1706/livana/2026-11-21/story-6.jpg"
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/af28146dfac3c0efe70d6260aa3b33ee20c46b35/livana/2026-11-21/v4-story-teaser2.jpg"
    }
   ]
  }
