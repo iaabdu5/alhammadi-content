@@ -121,3 +121,92 @@ def towers_scene(w=1080,h=520):
     for t in xs: body+=tower(t[0],b,t[1],t[2],t[3] if len(t)>3 else 0)
     body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+26,w)
     return _svg(w,h,body)
+
+# ---- added 22 Nov 2026 ----
+def pavilion(x,y,w,h,peaks=3):
+    # gallery pavilion with saw-tooth (studio) roof
+    out=f'<path d="M{x} {y} L{x} {y-h}'
+    pw=w/peaks
+    for i in range(peaks):
+        out+=f' L{x+i*pw+pw*0.7} {y-h-26} L{x+i*pw+pw*0.7} {y-h} L{x+(i+1)*pw} {y-h}'
+    out+=f' L{x+w} {y}"/>'
+    for i in range(int(w/46)):
+        out+=f'<rect x="{x+14+i*46}" y="{y-h*0.62}" width="26" height="{h*0.45}" stroke="{L}" stroke-width="1.3"/>'
+    return out
+
+def screen(x,y,w=150,h=84):
+    # rooftop cinema screen on legs + little rows of seats
+    out=f'<rect x="{x}" y="{y-h-30}" width="{w}" height="{h}"/><path d="M{x+16} {y-30} L{x+16} {y} M{x+w-16} {y-30} L{x+w-16} {y}"/>'
+    out+=f'<path d="M{x+30} {y-h-4} q{w*0.2} -24 {w*0.4} 0" stroke="{L}" stroke-width="1.3"/><circle cx="{x+w*0.72}" cy="{y-h-8}" r="9" stroke="{L}" stroke-width="1.3"/>'
+    return out
+
+def bridge(x0,x1,y):
+    out=f'<path d="M{x0} {y} Q{(x0+x1)/2} {y-40} {x1} {y}"/><path d="M{x0} {y-26} Q{(x0+x1)/2} {y-66} {x1} {y-26}" stroke="{L}" stroke-width="1.4"/>'
+    for k in range(1,8):
+        xx=x0+k*(x1-x0)/8; t=k/8; yy=y-160*t*(1-t)
+        out+=f'<path d="M{xx} {yy} L{xx} {yy-26}" stroke="{L}" stroke-width="1.1"/>'
+    return out
+
+def creative_scene(w=1080,h=520):
+    # NOMA-style creative district: studio pavilions, rooftop cinema, bridge, palms, Louvre dome far right
+    b=h-100
+    body=DEFS+sun(w*0.74,b-230,230)
+    body+=pavilion(90,b,260,120,4)+pavilion(380,b,200,170,3)
+    body+=f'<path d="M380 {b-170} L580 {b-170}"/>'+screen(405,b-170,150,80)
+    body+=bridge(600,800,b-60)+f'<path d="M600 {b-60} L600 {b} M800 {b-60} L800 {b}"/>'
+    body+=louvre(820,b,220)
+    body+=palm(60,b,130,1)+palm(1040,b,120,-1)
+    for xx in (330,355): body+=f'<circle cx="{xx}" cy="{b-26}" r="16" stroke="{L}" stroke-width="1.4"/><path d="M{xx} {b-10} L{xx} {b}"/>'
+    body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+26,w,3)
+    return _svg(w,h,body)
+
+def crane(x,y,h=360,jib=300):
+    out=f'<path d="M{x} {y} L{x} {y-h} M{x+22} {y} L{x+22} {y-h}"/>'
+    for k in range(int(h/30)):
+        yy=y-k*30; out+=f'<path d="M{x} {yy} L{x+22} {yy-30}" stroke="{L}" stroke-width="1.2"/>'
+    out+=f'<path d="M{x-90} {y-h} L{x+jib} {y-h} M{x-90} {y-h+16} L{x+jib} {y-h+16} M{x+11} {y-h-50} L{x-90} {y-h} M{x+11} {y-h-50} L{x+jib} {y-h}"/>'
+    out+=f'<rect x="{x-96}" y="{y-h+16}" width="40" height="30"/>'
+    hx=x+jib*0.7; out+=f'<path d="M{hx} {y-h+16} L{hx} {y-h+150}"/><path d="M{hx-10} {y-h+150} L{hx+10} {y-h+150} L{hx} {y-h+165} Z"/>'
+    return out
+
+def frame_tower(x,y,w,h,floors_done):
+    # building under construction: finished floors with windows, upper floors open frame
+    out=''; fh=h/12
+    for k in range(12):
+        yy=y-(k+1)*fh
+        if k<floors_done:
+            out+=f'<rect x="{x}" y="{yy}" width="{w}" height="{fh}"/>'
+            for i in range(int(w/30)): out+=f'<path d="M{x+10+i*30} {yy+fh*0.3} L{x+10+i*30} {yy+fh*0.75}" stroke="{L}" stroke-width="1.2"/>'
+        else:
+            out+=f'<path d="M{x} {yy} L{x+w} {yy}" stroke="{L}" stroke-width="1.4"/>'
+    out+=f'<path d="M{x} {y} L{x} {y-h} M{x+w} {y} L{x+w} {y-h} M{x+w/2} {y-floors_done*fh} L{x+w/2} {y-h}" />'
+    return out
+
+def construction_scene(w=1080,h=520):
+    b=h-90
+    body=DEFS+sun(w*0.3,b-250,220)
+    body+=frame_tower(380,b,180,360,7)+frame_tower(620,b,140,280,9)+crane(300,b,400,420)
+    body+=tower(830,b,60,200)+tower(900,b,50,150)+palm(120,b,130,1)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/><path d="M80 {b+28} L{w-80} {b+28}" stroke="{L}" stroke-width="1.4"/>'
+    return _svg(w,h,body)
+
+def louvre_dome(w=1080,h=600):
+    # close-up of the Louvre dome lattice with light rays, over water
+    b=h-130; cx=w/2; R=430
+    body=DEFS+sun(cx,b-40,300)
+    body+=f'<path d="M{cx-R} {b} Q{cx} {b-R*0.62} {cx+R} {b}"/><path d="M{cx-R+30} {b+6} Q{cx} {b-R*0.5} {cx+R-30} {b+6}" stroke="{L}" stroke-width="1.4"/>'
+    for k in range(-6,7):
+        xx=cx+k*R/7; t=(xx-cx)/R; top=b-R*0.31*(1-t*t)*2*0.99
+        body+=f'<path d="M{xx} {top} L{xx+k*6} {b}" stroke="{L}" stroke-width="1"/>'
+    for k in range(1,9):
+        yy=b-8-k*13
+        body+=f'<path d="M{cx-20-k*14} {yy+80} L{cx-60-k*24} {b-6}" stroke="{L}" stroke-width="0.9"/><path d="M{cx+20+k*14} {yy+80} L{cx+60+k*24} {b-6}" stroke="{L}" stroke-width="0.9"/>'
+    for px in (cx-R*0.62,cx,cx+R*0.62):
+        body+=f'<path d="M{px} {b-R*0.31*(1-((px-cx)/R)**2)*2+4} L{px} {b+40}"/>'
+    body+=f'<path d="M30 {b+40} L{w-30} {b+40}"/>'+water(b+66,w,3)
+    return _svg(w,h,body)
+
+def keys_art(s=200):
+    body=f'<circle cx="{s*0.32}" cy="{s*0.32}" r="{s*0.2}"/><circle cx="{s*0.32}" cy="{s*0.32}" r="{s*0.07}" stroke="{L}"/>'
+    body+=f'<path d="M{s*0.46} {s*0.46} L{s*0.88} {s*0.88} M{s*0.72} {s*0.72} L{s*0.8} {s*0.64} M{s*0.82} {s*0.82} L{s*0.9} {s*0.74}"/>'
+    return _svg(s,s,body)
