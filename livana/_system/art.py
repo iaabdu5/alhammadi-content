@@ -210,3 +210,57 @@ def keys_art(s=200):
     body=f'<circle cx="{s*0.32}" cy="{s*0.32}" r="{s*0.2}"/><circle cx="{s*0.32}" cy="{s*0.32}" r="{s*0.07}" stroke="{L}"/>'
     body+=f'<path d="M{s*0.46} {s*0.46} L{s*0.88} {s*0.88} M{s*0.72} {s*0.72} L{s*0.8} {s*0.64} M{s*0.82} {s*0.82} L{s*0.9} {s*0.74}"/>'
     return _svg(s,s,body)
+
+# ---- added 23 Nov 2026 ----
+def galleria(x,y,w=380):
+    # low mall with long wave roof + glass bays
+    out=f'<path d="M{x} {y} L{x} {y-60} Q{x+w*0.25} {y-110} {x+w*0.5} {y-70} T{x+w} {y-80} L{x+w} {y}"/>'
+    out+=f'<path d="M{x+10} {y-58} Q{x+w*0.25} {y-98} {x+w*0.5} {y-62} T{x+w-10} {y-70}" stroke="{L}" stroke-width="1.3"/>'
+    for i in range(1,int(w/38)): out+=f'<path d="M{x+i*38} {y} L{x+i*38} {y-40}" stroke="{L}" stroke-width="1.1"/>'
+    return out
+
+def sowwah(x,y,w=58,h=300):
+    # ADGM-style tower with angled crown
+    out=f'<path d="M{x} {y} L{x} {y-h} L{x+w*0.5} {y-h-34} L{x+w} {y-h} L{x+w} {y}"/>'
+    for k in range(1,int(h/22)): out+=f'<path d="M{x+5} {y-k*22} L{x+w-5} {y-k*22}" stroke="{L}" stroke-width="1"/>'
+    out+=f'<path d="M{x+w*0.5} {y-h-34} L{x+w*0.5} {y}" stroke="{L}" stroke-width="1"/>'
+    return out
+
+def dhow(x,y,s=1):
+    out=f'<path d="M{x} {y} Q{x+60*s} {y+22*s} {x+140*s} {y-8*s} L{x+150*s} {y-14*s}"/><path d="M{x} {y} L{x-10*s} {y-12*s}"/>'
+    out+=f'<path d="M{x+70*s} {y+4*s} L{x+70*s} {y-110*s}"/><path d="M{x+70*s} {y-110*s} Q{x+20*s} {y-60*s} {x+20*s} {y-6*s} L{x+130*s} {y-6*s} Q{x+120*s} {y-60*s} {x+70*s} {y-110*s}" stroke="{L}" stroke-width="1.4"/>'
+    return out
+
+def maryah_scene(w=1080,h=560):
+    # Al Maryah Island: financial-district towers, wave-roof mall, bridge, promenade, dhow on the water
+    b=h-140
+    body=DEFS+sun(w*0.28,b-260,230)
+    body+=sowwah(330,b,62,290)+sowwah(405,b,62,330)+sowwah(480,b,62,310)+sowwah(555,b,62,270)
+    body+=tower(650,b,74,220)+tower(735,b,52,170,1)
+    body+=galleria(120,b,520)
+    body+=bridge(790,1040,b-10)+f'<path d="M790 {b-10} L790 {b} M1040 {b-10} L1040 {b}"/>'
+    body+=palm(80,b,110,1)+palm(700,b,100,-1)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+28,w,3)+dhow(620,b+70,0.9)
+    return _svg(w,h,body)
+
+def island_map(w=460,h=520):
+    # stylised map: Al Maryah between the city and Al Reem, joined by bridges
+    body=DEFS+sun(w*0.5,h*0.5,220)
+    body+=f'<path d="M30 40 L30 {h-30}" stroke="{L}" stroke-width="1.4"/>'
+    body+=f'<path d="M10 60 Q60 160 40 260 T60 {h-40}"/>'  # city coastline
+    body+=f'<path d="M190 70 Q250 50 270 120 Q285 220 260 330 Q240 440 200 470 Q160 430 165 320 Q170 200 190 70 Z" fill="#FAF6EE"/>'  # maryah
+    body+=f'<path d="M370 30 Q440 80 430 220 Q420 380 450 500 L{w} 500 L{w} 30 Z" stroke="{L}" stroke-width="1.6"/>'  # reem
+    for yy in (150,300,420): body+=f'<path d="M48 {yy} L172 {yy}"/><path d="M48 {yy+8} L172 {yy+8}" stroke="{L}" stroke-width="1.1"/>'
+    for yy in (180,360): body+=f'<path d="M272 {yy} L418 {yy}"/><path d="M272 {yy+8} L418 {yy+8}" stroke="{L}" stroke-width="1.1"/>'
+    body+=f'<circle cx="222" cy="230" r="9" fill="{G}" stroke="none"/><circle cx="222" cy="230" r="20"/>'
+    return _svg(w,h,body)
+
+def plan_art(w=420,h=420):
+    # architectural floor plan (blueprint line drawing)
+    body=DEFS+sun(w/2,h/2,200)
+    body+=f'<rect x="50" y="60" width="320" height="300" stroke-width="3"/>'
+    body+=f'<path d="M50 200 L180 200 M180 60 L180 150 M180 190 L180 360 M180 260 L370 260 M290 260 L290 360"/>'
+    body+=f'<path d="M180 150 A40 40 0 0 1 220 190" stroke="{L}" stroke-width="1.4"/><path d="M110 200 A36 36 0 0 0 74 236" stroke="{L}" stroke-width="1.4"/>'
+    body+=f'<rect x="70" y="80" width="80" height="50" stroke="{L}" stroke-width="1.4"/><rect x="220" y="90" width="120" height="70" rx="6" stroke="{L}" stroke-width="1.4"/><circle cx="330" cy="320" r="18" stroke="{L}" stroke-width="1.4"/>'
+    body+=f'<path d="M50 390 L370 390 M50 382 L50 398 M370 382 L370 398" stroke="{L}" stroke-width="1.4"/>'
+    return _svg(w,h,body)
