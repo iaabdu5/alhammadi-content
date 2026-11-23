@@ -127,7 +127,7 @@ page('s2.html','''
 <div class="abs map">'''+island_map(460,520)+'''</div>
 <div class="abs big a">جزيرة الماريه تقع بين <b>وسط المدينة</b> وجزيرة <b>الريم</b>، ومرتبطة بالاثنين بجسور، وفيها مقر سوق أبوظبي العالمي.</div>
 <div class="abs bar"></div>
-<div class="abs q a">الليلة نكتشفها معاً في منشورنا 👀</div>''',story=True)
+<div class="abs q a">اليوم الظهر نكتشفها معاً في منشورنا 👀</div>''',story=True)
 
 # S3 teaser post 1 — phone frame
 page('s3.html','''
