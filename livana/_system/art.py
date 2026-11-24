@@ -264,3 +264,84 @@ def plan_art(w=420,h=420):
     body+=f'<rect x="70" y="80" width="80" height="50" stroke="{L}" stroke-width="1.4"/><rect x="220" y="90" width="120" height="70" rx="6" stroke="{L}" stroke-width="1.4"/><circle cx="330" cy="320" r="18" stroke="{L}" stroke-width="1.4"/>'
     body+=f'<path d="M50 390 L370 390 M50 382 L50 398 M370 382 L370 398" stroke="{L}" stroke-width="1.4"/>'
     return _svg(w,h,body)
+
+# ---- added 24 Nov 2026 ----
+def coins(x,y,n=5,r=46):
+    # stack of coins seen in perspective
+    out=''
+    for i in range(n):
+        yy=y-i*16
+        out+=f'<ellipse cx="{x}" cy="{yy}" rx="{r}" ry="{r*0.32}" fill="#fff"/>'
+        out+=f'<path d="M{x-r} {yy} L{x-r} {yy+12} M{x+r} {yy} L{x+r} {yy+12}" stroke="{L}" stroke-width="1.2"/>'
+    out+=f'<ellipse cx="{x}" cy="{y-(n-1)*16}" rx="{r*0.6}" ry="{r*0.18}" stroke="{L}" stroke-width="1.2"/>'
+    return out
+
+def calculator(x,y,w=200,h=280):
+    out=f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" fill="#fff"/>'
+    out+=f'<rect x="{x+18}" y="{y+18}" width="{w-36}" height="{h*0.2}" rx="6" stroke="{L}" stroke-width="1.4"/>'
+    out+=f'<path d="M{x+w-40} {y+18+h*0.1-8} L{x+w-40} {y+18+h*0.1+8} M{x+w-48} {y+18+h*0.1} L{x+w-32} {y+18+h*0.1}" stroke="{G}"/>'
+    bw=(w-36-30)/4; top=y+h*0.2+36
+    for r_ in range(4):
+        for c in range(4):
+            bx=x+18+c*(bw+10); by=top+r_*(bw*0.78+10)
+            out+=f'<rect x="{bx}" y="{by}" width="{bw}" height="{bw*0.78}" rx="5" stroke="{L if c<3 else G}" stroke-width="1.3"/>'
+    return out
+
+def calc_scene(w=1080,h=520):
+    b=h-110
+    body=DEFS+sun(w*0.5,b-170,220)
+    body+=villa(150,b,0.9)+tower(780,b,70,240)+tower(860,b,50,180,1)
+    body+=calculator(w/2-120,b-330,240,330)
+    body+=coins(330,b-14,6,52)+coins(690,b-14,4,44)
+    body+=palm(80,b,110,1)+palm(1000,b,100,-1)
+    body+=f'<path d="M30 {b} L{w-30} {b}"/>'+water(b+26,w,2)
+    return _svg(w,h,body)
+
+def magnifier(cx,cy,r=110):
+    out=f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#fff"/><circle cx="{cx}" cy="{cy}" r="{r-14}" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<path d="M{cx-r*0.45} {cy-r*0.55} Q{cx-r*0.62} {cy-r*0.2} {cx-r*0.55} {cy+r*0.05}" stroke="{L}" stroke-width="2.4"/>'
+    a=cx+r*0.71; b_=cy+r*0.71
+    out+=f'<path d="M{a} {b_} L{a+r*0.75} {b_+r*0.75}" stroke-width="10"/><path d="M{a} {b_} L{a+r*0.75} {b_+r*0.75}" stroke="#fff" stroke-width="4"/>'
+    return out
+
+def flag(x,y,h=120):
+    return f'<path d="M{x} {y} L{x} {y-h}"/><path d="M{x} {y-h} Q{x+30} {y-h-14} {x+60} {y-h} T{x+120} {y-h} L{x+120} {y-h+56} Q{x+90} {y-h+42} {x+60} {y-h+56} T{x} {y-h+56}" fill="#FAF6EE"/>'
+
+def inspect_scene(w=1080,h=560):
+    # magnifier over a listing card with warning flags
+    b=h-80
+    body=DEFS+sun(w*0.5,h*0.45,240)
+    body+=f'<rect x="250" y="70" width="460" height="380" rx="14" fill="#fff"/>'
+    body+=f'<rect x="280" y="100" width="400" height="190" rx="6" stroke="{L}" stroke-width="1.4"/>'+villa(380,280,0.7).replace(f'stroke="{G}"',f'stroke="{L}"')
+    for k,ww in enumerate((300,240,330)): body+=f'<path d="M280 {320+k*34} L{280+ww} {320+k*34}" stroke="{L}" stroke-width="5"/>'
+    body+=magnifier(700,300,120)
+    body+=flag(150,b,150)+flag(900,b-30,130)
+    body+=f'<path d="M40 {b} L{w-40} {b}"/>'
+    return _svg(w,h,body)
+
+def gridshell(x,y,w=420,h=110):
+    # Yas hotel style: two blocks wrapped by a flowing diamond-grid canopy
+    out=f'<rect x="{x+30}" y="{y-h+20}" width="{w*0.38}" height="{h-20}"/><rect x="{x+w*0.55}" y="{y-h+20}" width="{w*0.38}" height="{h-20}"/>'
+    out+=f'<path d="M{x} {y-h+30} Q{x+w*0.25} {y-h-40} {x+w*0.5} {y-h+6} Q{x+w*0.75} {y-h-46} {x+w} {y-h+24}"/>'
+    for i in range(0,int(w),26):
+        out+=f'<path d="M{x+i} {y-h+20} L{x+i+26} {y-h-14}" stroke="{L}" stroke-width="1"/><path d="M{x+i+26} {y-h+20} L{x+i} {y-h-14}" stroke="{L}" stroke-width="1"/>'
+    out+=f'<path d="M{x+w*0.46} {y-h+20} L{x+w*0.5} {y} M{x+w*0.54} {y-h+20} L{x+w*0.5} {y}" stroke="{L}" stroke-width="1.2"/>'
+    return out
+
+def theme_roof(x,y,w=360):
+    # low flowing theme-park roof (generic, unbranded)
+    return f'<path d="M{x} {y} Q{x+w*0.18} {y-34} {x+w*0.5} {y-70} Q{x+w*0.82} {y-34} {x+w} {y}"/><path d="M{x+w*0.12} {y-6} Q{x+w*0.5} {y-56} {x+w*0.88} {y-6}" stroke="{L}" stroke-width="1.3"/>'
+
+def track(x0,x1,y):
+    d=f'M{x0} {y} C{x0+120} {y+40} {x0+220} {y-30} {x0+360} {y+10} S{x1-100} {y+40} {x1} {y}'
+    return f'<path d="{d}" stroke="{L}" stroke-width="5"/><path d="{d}" stroke="#fff" stroke-width="1.5" stroke-dasharray="10 10"/>'
+
+def yas_scene(w=1080,h=520):
+    b=h-130
+    body=DEFS+sun(w*0.72,b-200,220)
+    body+=gridshell(420,b,460,120)+theme_roof(40,b,330)
+    body+=tower(900,b,60,200)+tower(970,b,46,150,1)
+    body+=track(40,w-40,b+34)
+    body+=palm(380,b,120,1)+palm(895,b,96,-1)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+64,w,2)+dhow(150,b+100,0.7)
+    return _svg(w,h,body)
