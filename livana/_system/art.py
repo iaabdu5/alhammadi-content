@@ -345,3 +345,81 @@ def yas_scene(w=1080,h=520):
     body+=palm(380,b,120,1)+palm(895,b,96,-1)
     body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+64,w,2)+dhow(150,b+100,0.7)
     return _svg(w,h,body)
+
+# ---- added 25 Nov 2026 ----
+def gauge(cx,cy,r=300,val=0.0,labels=('0%','5%')):
+    # semicircle meter, needle at val (0..1, left->right)
+    import math
+    out=f'<path d="M{cx-r} {cy} A{r} {r} 0 0 1 {cx+r} {cy}"/>'
+    out+=f'<path d="M{cx-r+34} {cy} A{r-34} {r-34} 0 0 1 {cx+r-34} {cy}" stroke="{L}" stroke-width="1.3"/>'
+    for k in range(21):
+        a=math.pi*(1-k/20); l=26 if k%5==0 else 12
+        x1=cx+(r-4)*math.cos(a); y1=cy-(r-4)*math.sin(a); x2=cx+(r-4-l)*math.cos(a); y2=cy-(r-4-l)*math.sin(a)
+        out+=f'<path d="M{x1:.1f} {y1:.1f} L{x2:.1f} {y2:.1f}" stroke-width="{2 if k%5==0 else 1.2}"/>'
+    a=math.pi*(1-val)
+    out+=f'<path d="M{cx} {cy} L{cx+(r-70)*math.cos(a):.1f} {cy-(r-70)*math.sin(a):.1f}" stroke-width="5"/><circle cx="{cx}" cy="{cy}" r="16" fill="#fff" stroke-width="3"/>'
+    return out
+
+def qasr_watan(x,y,s=1):
+    # Qasr Al Watan style: wide palace, big central dome, side domes, arcade
+    def dome(cx,b,r,h):
+        return f'<path d="M{cx-r} {b} Q{cx-r} {b-h*0.9} {cx} {b-h} Q{cx+r} {b-h*0.9} {cx+r} {b}"/><path d="M{cx} {b-h} L{cx} {b-h-18*s}"/>'
+    w=440*s
+    out=f'<path d="M{x-w} {y} L{x+w} {y} M{x-w+20*s} {y} L{x-w+20*s} {y-90*s} L{x+w-20*s} {y-90*s} L{x+w-20*s} {y}"/>'
+    out+=f'<path d="M{x-w+10*s} {y-90*s} L{x+w-10*s} {y-90*s}"/>'
+    for k in range(-9,10):
+        xx=x+k*44*s
+        out+=f'<path d="M{xx-14*s} {y} L{xx-14*s} {y-46*s} Q{xx} {y-66*s} {xx+14*s} {y-46*s} L{xx+14*s} {y}" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<rect x="{x-120*s}" y="{y-150*s}" width="{240*s}" height="{60*s}"/>'
+    out+=dome(x,y-150*s,110*s,170*s)+f'<path d="M{x-80*s} {y-150*s} Q{x} {y-290*s} {x+80*s} {y-150*s}" stroke="{L}" stroke-width="1.3"/>'
+    for sx in (-1,1):
+        out+=dome(x+sx*230*s,y-90*s,44*s,70*s)+dome(x+sx*350*s,y-90*s,30*s,48*s)
+    return out
+
+def qasr_scene(w=1080,h=520):
+    b=h-110
+    body=DEFS+sun(w*0.5,b-210,250)+qasr_watan(w/2,b,1.05)+palm(40,b,110,1)+palm(1040,b,110,-1)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/>'+f'<path d="M140 {b+28} L{w-140} {b+28}" stroke="{L}" stroke-width="1.4"/>'+f'<path d="M260 {b+52} L{w-260} {b+52}" stroke="{L}" stroke-width="1.2"/>'
+    return _svg(w,h,body)
+
+def supply_scene(w=1080,h=640,vals=((2027,14.6),(2028,24.2))):
+    # two towers whose heights are proportional to the values
+    b=h-80; mx=max(v for _,v in vals); out=DEFS+sun(w*0.5,b-260,260)
+    xs=[w*0.30,w*0.62]
+    for (yr,v),x in zip(vals,xs):
+        hh=(h-230)*v/mx; tw=170
+        out+=f'<rect x="{x-tw/2}" y="{b-hh}" width="{tw}" height="{hh}" fill="#fff"/>'
+        for k in range(1,int(hh/26)):
+            out+=f'<path d="M{x-tw/2+10} {b-k*26} L{x+tw/2-10} {b-k*26}" stroke="{L}" stroke-width="1"/>'
+        out+=f'<path d="M{x} {b-hh} L{x} {b-hh-30}"/>'
+    out+=crane(w*0.83,b,h-200,180) if 'crane' in globals() else ''
+    out+=palm(70,b,110,1)+f'<path d="M30 {b} L{w-30} {b}"/>'
+    return _svg(w,h,out)
+
+def seal(cx,cy,r=150,text='TAWTHEEQ · REGISTERED · ABU DHABI · '):
+    import math
+    out=f'<circle cx="{cx}" cy="{cy}" r="{r}"/><circle cx="{cx}" cy="{cy}" r="{r-14}" stroke="{L}" stroke-width="1.2"/><circle cx="{cx}" cy="{cy}" r="{r-62}"/>'
+    for k in range(48):
+        a=2*math.pi*k/48; out+=f'<path d="M{cx+(r+6)*math.cos(a):.1f} {cy+(r+6)*math.sin(a):.1f} L{cx+(r+14)*math.cos(a):.1f} {cy+(r+14)*math.sin(a):.1f}" stroke="{L}" stroke-width="1.4"/>'
+    out+=f'<defs><path id="sp{cx}" d="M{cx-r+38} {cy} A{r-38} {r-38} 0 1 1 {cx+r-38} {cy} A{r-38} {r-38} 0 1 1 {cx-r+38} {cy}"/></defs>'
+    out+=f'<text font-family="MS" font-size="19" font-weight="500" letter-spacing="5" fill="{G}" stroke="none"><textPath href="#sp{cx}">{text}{text}</textPath></text>'
+    out+=f'<path d="M{cx-34} {cy+2} L{cx-8} {cy+28} L{cx+40} {cy-26}" stroke-width="6"/>'
+    return out
+
+def shop(x,y,s=1):
+    return f'<path d="M{x} {y} L{x} {y-90*s} L{x+160*s} {y-90*s} L{x+160*s} {y}"/><path d="M{x-10*s} {y-90*s} L{x+170*s} {y-90*s} L{x+160*s} {y-120*s} L{x} {y-120*s} Z"/>'+''.join(f'<path d="M{x+i*32*s} {y-90*s} q{16*s} {22*s} {32*s} 0" stroke="{L}" stroke-width="1.4"/>' for i in range(5))+f'<rect x="{x+20*s}" y="{y-60*s}" width="{60*s}" height="{60*s}" stroke="{L}"/><rect x="{x+100*s}" y="{y-60*s}" width="{40*s}" height="{40*s}" stroke="{L}"/>'
+
+def factory(x,y,s=1):
+    return f'<path d="M{x} {y} L{x} {y-60*s} L{x+50*s} {y-90*s} L{x+50*s} {y-60*s} L{x+100*s} {y-90*s} L{x+100*s} {y-60*s} L{x+150*s} {y-90*s} L{x+150*s} {y} Z"/><path d="M{x+120*s} {y-90*s} L{x+120*s} {y-150*s} L{x+140*s} {y-150*s} L{x+140*s} {y-80*s}"/><path d="M{x+130*s} {y-165*s} q12 -12 0 -24 q-12 -12 0 -24" stroke="{L}" stroke-width="1.4"/>'+''.join(f'<rect x="{x+15*s+i*45*s}" y="{y-40*s}" width="{25*s}" height="{20*s}" stroke="{L}"/>' for i in range(3))
+
+def handover_scene(w=1080,h=540):
+    # finished tower + villa, big key with tag, crane leaving
+    b=h-90
+    body=DEFS+sun(w*0.55,b-220,240)
+    body+=tower(160,b,90,330)+tower(260,b,64,240,1)+villa(600,b,0.95)
+    body+=crane(930,b,300,150).replace(f'stroke="{G}"',f'stroke="{L}"') if 'crane' in globals() else ''
+    kx,ky=430,b-200
+    body+=f'<circle cx="{kx}" cy="{ky}" r="52" fill="#fff" stroke-width="4"/><circle cx="{kx}" cy="{ky}" r="20" stroke-width="3"/>'
+    body+=f'<path d="M{kx+52} {ky} L{kx+190} {ky} M{kx+150} {ky} L{kx+150} {ky+30} M{kx+180} {ky} L{kx+180} {ky+24}" stroke-width="7"/>'
+    body+=palm(60,b,110,1)+f'<path d="M30 {b} L{w-30} {b}"/>'+water(b+26,w,2)
+    return _svg(w,h,body)
