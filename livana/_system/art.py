@@ -423,3 +423,81 @@ def handover_scene(w=1080,h=540):
     body+=f'<path d="M{kx+52} {ky} L{kx+190} {ky} M{kx+150} {ky} L{kx+150} {ky+30} M{kx+180} {ky} L{kx+180} {ky+24}" stroke-width="7"/>'
     body+=palm(60,b,110,1)+f'<path d="M30 {b} L{w-30} {b}"/>'+water(b+26,w,2)
     return _svg(w,h,body)
+
+# ---- added 26 Nov 2026 ----
+def _cone(bx,by,wb,tx,ty,wt,fill='#fff'):
+    # truncated funnel cone (wide top) with elliptical rim, Gehry-style
+    out=f'<path d="M{bx-wb/2} {by} L{tx-wt/2} {ty} A{wt/2} {wt*0.16} 0 0 1 {tx+wt/2} {ty} L{bx+wb/2} {by} Z" fill="{fill}"/>'
+    out+=f'<ellipse cx="{tx}" cy="{ty}" rx="{wt/2}" ry="{wt*0.16}" fill="{fill}"/>'
+    for f in (0.33,0.66):
+        out+=f'<path d="M{bx-wb/2+wb*f} {by} L{tx-wt/2+wt*f} {ty+wt*0.15}" stroke="{L}" stroke-width="1.1"/>'
+    return out
+
+def guggenheim(x,y,s=1):
+    # Guggenheim Abu Dhabi impression: stacked gallery boxes + tilted cones of varying heights
+    S=lambda v:v*s
+    out=''
+    boxes=[(-330,90,200,0),(-150,120,180,0),(10,80,220,0),(-240,60,150,90),(-60,70,170,120),(120,55,140,80),(210,95,160,0)]
+    for dx,hh,ww,up in boxes:
+        bx=x+S(dx); by=y-S(up)
+        out+=f'<rect x="{bx}" y="{by-S(hh)}" width="{S(ww)}" height="{S(hh)}" fill="#fff"/>'
+        for k in range(1,int(ww/36)): out+=f'<path d="M{bx+S(k*36)} {by-S(hh)+S(8)} L{bx+S(k*36)} {by-S(8)}" stroke="{L}" stroke-width="1"/>'
+    cones=[(-250,150,60,-280,330,110),(-40,200,70,-10,420,150),(170,170,60,210,350,120),(330,90,46,360,250,90),(-380,60,40,-410,200,70)]
+    for dx,up,wb,tdx,tup,wt in cones:
+        out+=_cone(x+S(dx),y-S(up),S(wb),x+S(tdx),y-S(tup),S(wt))
+    out+=f'<path d="M{x-S(440)} {y} L{x+S(440)} {y}"/>'
+    return out
+
+def guggenheim_scene(w=1080,h=560):
+    b=h-110
+    body=DEFS+sun(w*0.62,b-300,250)+guggenheim(w/2,b,1.0)+palm(50,b,110,1)+palm(1030,b,100,-1)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/>'+water(b+26,w,3)
+    return _svg(w,h,body)
+
+def district_map(w=900,h=620,pins=()):
+    # stylised Saadiyat Cultural District: coastline, lagoon, road, pins (x,y,label) drawn by caller
+    body=DEFS+sun(w*0.5,h*0.5,300)
+    body+=f'<path d="M20 {h*0.72} Q{w*0.25} {h*0.62} {w*0.45} {h*0.70} T{w*0.8} {h*0.66} T{w-20} {h*0.74}"/>'
+    body+=water(h*0.80,w,3)
+    body+=f'<path d="M{w*0.08} {h*0.12} Q{w*0.5} {h*0.02} {w*0.92} {h*0.18}" stroke="{L}" stroke-width="10" opacity="0.35"/>'
+    body+=f'<path d="M{w*0.08} {h*0.12} Q{w*0.5} {h*0.02} {w*0.92} {h*0.18}" stroke-dasharray="14 12" stroke-width="1.4"/>'
+    body+=f'<path d="M{w*0.30} {h*0.55} Q{w*0.36} {h*0.48} {w*0.44} {h*0.55} Q{w*0.38} {h*0.60} {w*0.30} {h*0.55} Z" stroke="{L}" stroke-width="1.4"/>'
+    for px,py,big in pins:
+        r=13 if big else 8
+        body+=f'<circle cx="{px}" cy="{py}" r="{r}" fill="{G if big else "#fff"}" stroke="{G}" stroke-width="2.5"/>'
+        if big: body+=f'<circle cx="{px}" cy="{py}" r="{r+14}" stroke="{G}" stroke-width="1.4"/>'
+    return _svg(w,h,body)
+
+def keytag(cx,cy,w=320,h=560,text1='',text2=''):
+    # hotel key tag: rounded-top tag with hole, ring and key
+    x0=cx-w/2; y0=cy-h/2
+    out=f'<path d="M{x0} {y0+w/2} A{w/2} {w/2} 0 0 1 {x0+w} {y0+w/2} L{x0+w} {y0+h-30} Q{x0+w} {y0+h} {x0+w-30} {y0+h} L{x0+30} {y0+h} Q{x0} {y0+h} {x0} {y0+h-30} Z" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<path d="M{x0+16} {y0+w/2} A{w/2-16} {w/2-16} 0 0 1 {x0+w-16} {y0+w/2} L{x0+w-16} {y0+h-40} Q{x0+w-16} {y0+h-16} {x0+w-40} {y0+h-16} L{x0+40} {y0+h-16} Q{x0+16} {y0+h-16} {x0+16} {y0+h-40} Z" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<circle cx="{cx}" cy="{y0+70}" r="22" stroke-width="2.5"/>'
+    out+=f'<circle cx="{cx}" cy="{y0-40}" r="58" stroke-width="3"/>'
+    kx,ky=cx+40,y0-90
+    out+=f'<circle cx="{kx}" cy="{ky}" r="26" fill="#fff" stroke-width="3.5"/><circle cx="{kx}" cy="{ky}" r="9" stroke-width="2.5"/><path d="M{kx+26} {ky} L{kx+130} {ky} M{kx+100} {ky} L{kx+100} {ky+22} M{kx+122} {ky} L{kx+122} {ky+16}" stroke-width="5"/>'
+    return out
+
+def door_hanger(cx,cy,w=420,h=900):
+    x0=cx-w/2; y0=cy-h/2; r=78
+    out=f'<path d="M{x0} {y0+40} Q{x0} {y0} {x0+40} {y0} L{x0+w-40} {y0} Q{x0+w} {y0} {x0+w} {y0+40} L{x0+w} {y0+h-30} Q{x0+w} {y0+h} {x0+w-30} {y0+h} L{x0+30} {y0+h} Q{x0} {y0+h} {x0} {y0+h-30} Z" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<circle cx="{cx}" cy="{y0+130}" r="{r}" stroke-width="2.5"/><path d="M{cx+r*0.7} {y0+130-r*0.7} L{x0+w-10} {y0+20}" stroke-width="2.5"/>'
+    out+=f'<path d="M{x0+22} {y0+250} L{x0+w-22} {y0+250}" stroke="{L}" stroke-width="1.3"/>'
+    return out
+
+def ticket(x,y,w=820,h=420,stub=220):
+    # museum ticket with perforated stub and notches
+    r=34
+    out=f'<path d="M{x} {y} L{x+w-stub} {y} A{r} {r} 0 0 0 {x+w-stub+0.1} {y} L{x+w} {y} L{x+w} {y+h/2-r} A{r} {r} 0 0 0 {x+w} {y+h/2+r} L{x+w} {y+h} L{x} {y+h} L{x} {y+h/2+r} A{r} {r} 0 0 0 {x} {y+h/2-r} Z" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<path d="M{x+w-stub} {y+10} L{x+w-stub} {y+h-10}" stroke-dasharray="6 10" stroke-width="2"/>'
+    out+=f'<rect x="{x+18}" y="{y+18}" width="{w-36}" height="{h-36}" stroke="{L}" stroke-width="1.2"/>'
+    return out
+
+def height_scale(x,y,h=900,maxv=88,marks=(0,22,44,66,88)):
+    # vertical ruler with ticks; value v sits at y - h*v/maxv
+    out=f'<path d="M{x} {y} L{x} {y-h}" stroke-width="2.5"/>'
+    for v in range(0,maxv+1,2):
+        yy=y-h*v/maxv; l=34 if v in marks else (18 if v%10==0 else 9)
+        out+=f'<path d="M{x} {yy:.1f} L{x+l} {yy:.1f}" stroke-width="{2 if v in marks else 1.1}"/>'
+    return out
