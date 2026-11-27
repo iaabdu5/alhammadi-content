@@ -501,3 +501,67 @@ def height_scale(x,y,h=900,maxv=88,marks=(0,22,44,66,88)):
         yy=y-h*v/maxv; l=34 if v in marks else (18 if v%10==0 else 9)
         out+=f'<path d="M{x} {yy:.1f} L{x+l} {yy:.1f}" stroke-width="{2 if v in marks else 1.1}"/>'
     return out
+
+# ---- added 27 Nov 2026 ----
+def flag_wave(x,y,w=420,h=260,pole=700):
+    # UAE flag on a pole in line art: vertical band at the hoist + 3 horizontal wavy bands
+    out=f'<path d="M{x} {y} L{x} {y-pole}" stroke-width="4"/><circle cx="{x}" cy="{y-pole-10}" r="10" fill="#fff" stroke-width="3"/>'
+    top=y-pole+10
+    def wave(yy,amp=18): return f'M{x} {yy} C{x+w*0.3} {yy-amp} {x+w*0.55} {yy+amp} {x+w} {yy-amp*0.4}'
+    out+=f'<path d="{wave(top)} L{x+w} {top+h-amp_fix(h)} C{x+w*0.55} {top+h+18} {x+w*0.3} {top+h-18} {x} {top+h} Z" fill="#fff" stroke-width="2.5"/>'
+    for k in (1,2):
+        out+=f'<path d="{wave(top+h*k/3)}" stroke="{L}" stroke-width="1.6"/>'
+    out+=f'<path d="M{x+w*0.26} {top-6} C{x+w*0.27} {top+h*0.4} {x+w*0.25} {top+h*0.7} {x+w*0.26} {top+h+6}" stroke-width="2"/>'
+    out+=f'<path d="M{x-40} {y} L{x+40} {y} M{x-26} {y-14} L{x+26} {y-14}" stroke-width="3"/>'
+    return out
+def amp_fix(h): return 7
+
+def calendar_leaf(x,y,w=300,h=320,rings=2):
+    # tear-off calendar page with binder rings; text overlaid in HTML
+    out=f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="22" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<path d="M{x} {y+h*0.28} L{x+w} {y+h*0.28}" stroke-width="2"/>'
+    out+=f'<rect x="{x+8}" y="{y+8}" width="{w-16}" height="{h*0.28-12}" rx="16" fill="#F6EEDC" stroke="none"/>'
+    for i in range(rings):
+        rx=x+w*(i+1)/(rings+1)
+        out+=f'<rect x="{rx-9}" y="{y-26}" width="18" height="48" rx="9" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<path d="M{x+14} {y+h-1} L{x+w-14} {y+h-1}" stroke="{L}" stroke-dasharray="4 7" stroke-width="1.5"/>'
+    return out
+
+def lantern(cx,top,s=1,chain=200):
+    # Ramadan/Friday fanous: chain, cap, glass body with arches, base
+    out=f'<path d="M{cx} {top} L{cx} {top+chain*s}" stroke-dasharray="3 7" stroke-width="2"/>'
+    y=top+chain*s
+    out+=f'<circle cx="{cx}" cy="{y+14*s}" r="{14*s}" stroke-width="2.5"/>'
+    y+=28*s
+    out+=f'<path d="M{cx-30*s} {y+50*s} Q{cx} {y-30*s} {cx+30*s} {y+50*s} Z" fill="#fff" stroke-width="2.5"/>'
+    y+=50*s
+    out+=f'<path d="M{cx-80*s} {y} L{cx+80*s} {y} L{cx+64*s} {y+24*s} L{cx-64*s} {y+24*s} Z" fill="#fff" stroke-width="2.5"/>'
+    y+=24*s; bh=230*s
+    out+=f'<path d="M{cx-64*s} {y} L{cx-90*s} {y+bh*0.45} L{cx-64*s} {y+bh} L{cx+64*s} {y+bh} L{cx+90*s} {y+bh*0.45} L{cx+64*s} {y} Z" fill="#fff" stroke-width="2.5"/>'
+    for dx in (-36,0,36):
+        out+=f'<path d="M{cx+dx*s-14*s} {y+bh-26*s} L{cx+dx*s-14*s} {y+bh*0.42} Q{cx+dx*s} {y+bh*0.26} {cx+dx*s+14*s} {y+bh*0.42} L{cx+dx*s+14*s} {y+bh-26*s}" stroke="{L}" stroke-width="1.6"/>'
+    out+=f'<path d="M{cx-90*s} {y+bh*0.45} L{cx+90*s} {y+bh*0.45}" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<ellipse cx="{cx}" cy="{y+bh*0.62}" rx="{10*s}" ry="{18*s}" fill="#F3E7CC" stroke-width="1.6"/>'
+    y+=bh
+    out+=f'<path d="M{cx-64*s} {y} L{cx-40*s} {y+30*s} L{cx+40*s} {y+30*s} L{cx+64*s} {y}" fill="#fff" stroke-width="2.5"/><path d="M{cx} {y+30*s} L{cx} {y+56*s}" stroke-width="2.5"/><circle cx="{cx}" cy="{y+62*s}" r="{6*s}" stroke-width="2"/>'
+    return out
+
+def crescent(cx,cy,r=70):
+    return f'<path d="M{cx+r*0.2} {cy-r} A{r} {r} 0 1 0 {cx+r*0.2} {cy+r} A{r*0.78} {r*0.78} 0 1 1 {cx+r*0.2} {cy-r} Z" fill="#fff" stroke-width="2.5"/>'
+
+def star4(cx,cy,r=16):
+    return f'<path d="M{cx} {cy-r} Q{cx+r*0.18} {cy-r*0.18} {cx+r} {cy} Q{cx+r*0.18} {cy+r*0.18} {cx} {cy+r} Q{cx-r*0.18} {cy+r*0.18} {cx-r} {cy} Q{cx-r*0.18} {cy-r*0.18} {cx} {cy-r} Z" stroke-width="1.8"/>'
+
+def signpost(x,y,h=820,boards=((-1,0),(1,1),(-1,2),(1,3)),bw=300,bh=86):
+    # wooden-sign style post with arrow boards; boards=(dir,-1 left/+1 right, row); labels via HTML
+    out=f'<path d="M{x-14} {y} L{x-14} {y-h} L{x+14} {y-h} L{x+14} {y}" fill="#fff" stroke-width="2.5"/><path d="M{x-14} {y-h} L{x} {y-h-22} L{x+14} {y-h}" stroke-width="2.5"/>'
+    for d,row in boards:
+        by=y-h+60+row*(bh+44)
+        if d>0: pts=f'{x+6},{by} {x+bw},{by} {x+bw+40},{by+bh/2} {x+bw},{by+bh} {x+6},{by+bh}'
+        else: pts=f'{x-6},{by} {x-bw},{by} {x-bw-40},{by+bh/2} {x-bw},{by+bh} {x-6},{by+bh}'
+        out+=f'<polygon points="{pts}" fill="#fff" stroke-width="2.5"/>'
+    out+=f'<path d="M{x-120} {y} Q{x} {y-24} {x+120} {y}" stroke="{L}" stroke-width="1.6"/>'
+    return out
+
+def pushpin(cx,cy,s=1):
+    return f'<circle cx="{cx}" cy="{cy}" r="{20*s}" fill="#F6EEDC" stroke-width="2.5"/><circle cx="{cx-6*s}" cy="{cy-6*s}" r="{5*s}" stroke="{L}" stroke-width="1.5"/><path d="M{cx} {cy+20*s} L{cx} {cy+44*s}" stroke-width="2.5"/>'
