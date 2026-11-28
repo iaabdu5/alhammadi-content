@@ -565,3 +565,62 @@ def signpost(x,y,h=820,boards=((-1,0),(1,1),(-1,2),(1,3)),bw=300,bh=86):
 
 def pushpin(cx,cy,s=1):
     return f'<circle cx="{cx}" cy="{cy}" r="{20*s}" fill="#F6EEDC" stroke-width="2.5"/><circle cx="{cx-6*s}" cy="{cy-6*s}" r="{5*s}" stroke="{L}" stroke-width="1.5"/><path d="M{cx} {cy+20*s} L{cx} {cy+44*s}" stroke-width="2.5"/>'
+
+# ---- added 28 Nov 2026 ----
+def tree(x,y,h=110,r=46):
+    # rounded park tree: trunk + cloud crown
+    out=f'<path d="M{x} {y} L{x} {y-h*0.55} M{x} {y-h*0.42} L{x-14} {y-h*0.6} M{x} {y-h*0.48} L{x+16} {y-h*0.66}"/>'
+    cy=y-h*0.55-r*0.7
+    out+=f'<path d="M{x-r} {cy+r*0.3} q{-r*0.2} {-r*0.9} {r*0.55} {-r*0.95} q{r*0.4} {-r*0.55} {r*0.9} {-r*0.1} q{r*0.75} {r*0.05} {r*0.55} {r*0.95} q{-r*0.2} {r*0.5} {-r*0.9} {r*0.4} q{-r*0.5} {r*0.15} {-r*1.1} {-r*0.3}z"/>'
+    return out
+
+def midrise(x,y,w,h,cols=4):
+    # residential block with balconies grid
+    out=f'<rect x="{x}" y="{y-h}" width="{w}" height="{h}"/><path d="M{x-8} {y-h} L{x+w+8} {y-h}"/>'
+    rows=int(h/34)
+    for r in range(1,rows):
+        yy=y-h+r*34
+        out+=f'<path d="M{x} {yy} L{x+w} {yy}" stroke="{L}" stroke-width="1.1"/>'
+        for c in range(cols):
+            cx=x+8+c*(w-16)/cols
+            out+=f'<rect x="{cx+4}" y="{yy-24}" width="{(w-16)/cols-8}" height="16" stroke="{L}" stroke-width="1"/>'
+    return out
+
+def pergola(x,y,w=360,h=120):
+    # leaf canopy pergola on slim columns (park shade structure)
+    out=''
+    for i in range(5):
+        cx=x+20+i*(w-40)/4
+        out+=f'<path d="M{cx} {y} L{cx} {y-h+24}"/>'
+    out+=f'<path d="M{x-20} {y-h+20} Q{x+w*0.25} {y-h-30} {x+w*0.5} {y-h+10} Q{x+w*0.75} {y-h-34} {x+w+20} {y-h+18}"/>'
+    for i in range(0,int(w)+40,30):
+        xx=x-20+i
+        out+=f'<path d="M{xx} {y-h+14} q8 -14 18 -4 q-6 12 -18 4z" stroke="{L}" stroke-width="1.2"/>'
+    return out
+
+def canopy_scene(w=1080,h=520):
+    # waterfront apartments behind a park with a leaf canopy, Yas-style low skyline
+    b=h-120
+    body=DEFS+sun(w*0.26,b-250,210)
+    body+=midrise(560,b,150,300,4)+midrise(730,b,130,240,3)+midrise(880,b,120,190,3)
+    body+=pergola(120,b,360,130)
+    body+=tree(70,b,120,40)+tree(520,b,140,48)+tree(1010,b,110,36)
+    body+=f'<path d="M20 {b} L{w-20} {b}"/><path d="M60 {b+22} L{w-60} {b+22}" stroke="{L}" stroke-width="1.4"/>'
+    body+=water(b+52,w,2)+dhow(860,b+100,0.6)
+    return _svg(w,h,body)
+
+def globe(cx,cy,r=150):
+    # line-art globe with meridians/parallels and a pin
+    out=f'<circle cx="{cx}" cy="{cy}" r="{r}"/>'
+    for k in (0.35,0.7):
+        out+=f'<ellipse cx="{cx}" cy="{cy}" rx="{r*k}" ry="{r}" stroke="{L}" stroke-width="1.3"/>'
+    for k in (-0.6,-0.25,0.25,0.6):
+        yy=cy+k*r; hw=(r*r-(k*r)**2)**0.5
+        out+=f'<path d="M{cx-hw} {yy} L{cx+hw} {yy}" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<path d="M{cx} {cy-r} L{cx} {cy+r}" stroke="{L}" stroke-width="1.3"/><path d="M{cx-r} {cy} L{cx+r} {cy}" stroke="{L}" stroke-width="1.3"/>'
+    out+=f'<path d="M{cx-r-30} {cy+r+30} L{cx+r+30} {cy+r+30}"/><path d="M{cx} {cy+r} L{cx} {cy+r+30}"/>'
+    return out
+
+def speech_bubble(x,y,w,h,tail='left'):
+    t=f'M{x+60} {y+h} l-10 46 l52 -46' if tail=='left' else f'M{x+w-110} {y+h} l58 46 l-6 -46'
+    return f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="34" fill="#fff"/><path d="{t}" fill="#fff"/><path d="M{x+18} {y+h-1.5} L{x+w-18} {y+h-1.5}" stroke="#fff" stroke-width="3"/>'+f'<path d="{t}"/>'
