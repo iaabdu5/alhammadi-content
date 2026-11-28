@@ -54,25 +54,25 @@ def sc_townhouse(w=1080,h=520):
 
 # ---------- data (from Ahmad's sheet, 28 Nov 2026) ----------
 L=[
- dict(id='reeman-1br', ar='ريمان ليفنج', en='Reeman Living', area='الشامخة', area_en='Al Shamkha', type='شقة', type_en='Apartment',
+ dict(id='reeman-1br', photo='reeman2_n21', ar='ريمان ليفنج', en='Reeman Living', area='الشامخة', area_en='Al Shamkha', type='شقة', type_en='Apartment',
       br='غرفة وصالة', br_en='1 Bedroom', size='520', price=830000, deal='sale', status='off', scene=sc_shamkha),
  dict(id='parkview-1br', ar='بارك فيو', en='Park View', area='جزيرة السعديات', area_en='Saadiyat Island', type='شقة', type_en='Apartment',
       br='غرفة وصالة', br_en='1 Bedroom', size='1,013', price=1600000, deal='sale', status='ready', scene=sc_saadiyat),
- dict(id='fay-reeman-villa', ar='فاي الريمان', en='Fay Al Reeman', area='الشامخة', area_en='Al Shamkha', type='فيلا', type_en='Villa',
+ dict(id='fay-reeman-villa', photo='fay_cgi30_lifestyle_04', ar='فاي الريمان', en='Fay Al Reeman', area='الشامخة', area_en='Al Shamkha', type='فيلا', type_en='Villa',
       br='4 غرف نوم', br_en='4 Bedrooms', size='6,036', price=4160000, deal='sale', status='off', scene=sc_villa),
- dict(id='sama-yas-1br', ar='سما ياس', en='Sama Yas', area='جزيرة ياس', area_en='Yas Island', type='شقة', type_en='Apartment',
+ dict(id='sama-yas-1br', photo='sama_sam_banner_image_desk_1', ar='سما ياس', en='Sama Yas', area='جزيرة ياس', area_en='Yas Island', type='شقة', type_en='Apartment',
       br='غرفة وصالة', br_en='1 Bedroom', size='1,083', price=2690000, deal='sale', status='off', scene=sc_yas),
  dict(id='rahba-3br', ar='الرحبة 1', en='Al Rahba 1', area='شاطئ الراحة', area_en='Al Raha Beach', type='شقة', type_en='Apartment',
       br='3 غرف + غرفة خادمة', br_en='3 Bedrooms + Maid', size='1,922', price=3780000, deal='sale', status='ready', scene=sc_raha),
- dict(id='manarat3-1br', ar='منارات ليفنج 3', en='Manarat Living 3', area='جزيرة السعديات', area_en='Saadiyat Island', type='شقة', type_en='Apartment',
-      br='غرفة وصالة', br_en='1 Bedroom', size='758', price=1850000, orig=1700000, deal='sale', status='off', scene=sc_saadiyat),
+ dict(id='manarat3-1br', photo='man_manarat_living_gallery_1', ar='منارات ليفنج 3', en='Manarat Living 3', area='جزيرة السعديات', area_en='Saadiyat Island', type='شقة', type_en='Apartment',
+      br='غرفة وصالة', br_en='1 Bedroom', size='758', price=1850000, deal='sale', status='off', scene=sc_saadiyat),
  dict(id='aldeem-th', ar='الديم تاون هاوس', en='Al Deem Townhouse', area='الباهية', area_en='Al Bahia', type='تاون هاوس', type_en='Townhouse',
       br='4 غرف نوم', br_en='4 Bedrooms', size='4,412', price=4700000, deal='sale', status='off', scene=sc_townhouse),
  dict(id='alain-building', ar='بناية في حي المربعة', en='Building · Hai Al Murabaa', area='العين', area_en='Al Ain', type='بناية كاملة', type_en='Whole building',
       br='بناية كاملة', br_en='Whole building', size='7,233', price=4000000, deal='sale', status='ready', scene=sc_alain),
- dict(id='manarat2-1br', ar='منارات ليفنج 2', en='Manarat Living 2', area='جزيرة السعديات', area_en='Saadiyat Island', type='شقة', type_en='Apartment',
+ dict(id='manarat2-1br', photo='man_manarat_living_gallery_2', ar='منارات ليفنج 2', en='Manarat Living 2', area='جزيرة السعديات', area_en='Saadiyat Island', type='شقة', type_en='Apartment',
       br='غرفة وصالة', br_en='1 Bedroom', size='749', price=1950000, deal='sale', status='off', scene=sc_saadiyat),
- dict(id='reeman-studio-rent', ar='ريمان ليفنج', en='Reeman Living', area='الشامخة', area_en='Al Shamkha', type='استوديو', type_en='Studio',
+ dict(id='reeman-studio-rent', photo='reeman2_reeman-living-2_front_image', ar='ريمان ليفنج', en='Reeman Living', area='الشامخة', area_en='Al Shamkha', type='استوديو', type_en='Studio',
       br='استوديو', br_en='Studio', size='280', price=45000, deal='rent', status='ready', scene=sc_shamkha),
 ]
 def st_ar(x): return 'جاهز' if x['status']=='ready' else 'على الخارطة'
@@ -83,13 +83,18 @@ def unit(x): return 'درهم سنوياً' if x['deal']=='rent' else 'درهم'
 def unit_en(x): return 'AED / YEAR' if x['deal']=='rent' else 'AED'
 def origline(x): return f'<div class="orig a">السعر الأصلي {N(money(x["orig"]))} درهم</div>' if x.get('orig') else ''
 
+def pic(x,w,h,pos='center'):
+    return f'<img src="ph/{x["photo"]}.jpg" style="width:{w}px;height:{h}px;object-fit:cover;object-position:{pos};display:block">'
+def art(x,w,h,pos='center'):
+    return pic(x,w,h,pos) if x.get('photo') else x['scene'](w,h)
+
 COMMON='''
 .cta{display:inline-flex;align-items:center;gap:14px;border:1.5px solid #111;padding:14px 30px;font:700 28px TJ,MS;direction:rtl}
 .cta i{font:500 18px MS;font-style:normal;letter-spacing:3px;color:#B99A5B;direction:ltr}
 .orig{font:500 24px TJ,MS;color:#999;margin-top:6px}
 .adm{position:absolute;left:66px;bottom:26px;font:500 12px MS;letter-spacing:2px;color:#aaa}
 '''
-def foot_adm(): return f'<div class="adm">{ADM}</div>'
+def foot_adm(): return ''
 
 # ---------- layout A: porthole + price ----------
 def layA(x,fn):
@@ -109,7 +114,7 @@ def layA(x,fn):
 .sp{flex:1;padding:22px 0;text-align:center;border-left:1px solid #E6DAC0}.sp:last-child{border-left:0}
 .sp b{display:block;font:700 30px TJ,MS}.sp i{display:block;font:500 16px MS;font-style:normal;letter-spacing:3px;color:#999;margin-top:6px;direction:ltr}
 .oo{right:90px;top:1000px}
-''',f'''<div class="abs port2"></div><div class="abs port">{x['scene'](1080,520)}</div>
+''',f'''<div class="abs port2"></div><div class="abs port" style="{'align-items:center' if x.get('photo') else ''}">{pic(x,440,440) if x.get('photo') else x['scene'](1080,520)}</div>
 <div class="abs k"><span class="kick">{deal_en(x)} · {st_en(x)}</span></div>
 <div class="abs h a">{x['ar']}</div>
 <div class="abs ar a">{x['type']} {deal_ar(x)} · {x['area']}</div>
@@ -138,7 +143,7 @@ def layB(x,fn):
 .bar .t{font:700 34px TJ,MS;direction:rtl}
 .foot{bottom:40px}.cnr.bl{bottom:30px}
 .oo{right:90px;top:1212px}
-''',f'''<div class="abs band">{x['scene'](1080,520)}</div>
+''',f'''<div class="abs band">{('<div style="margin:0 90px;border:1.5px solid #B99A5B;padding:12px">'+pic(x,874,476)+'</div>') if x.get('photo') else x['scene'](1080,520)}</div>
 <div class="abs k"><span class="kick">{deal_en(x)} · {x['area_en'].upper()}</span></div>
 <div class="abs h a">{x['ar']}</div>
 <div class="abs sub a">{x['type']} {deal_ar(x)} في {x['area']}</div>
@@ -167,7 +172,7 @@ def layC(x,fn):
 .pu{left:254px;top:1145px;font:500 17px MS;letter-spacing:4px;color:#B99A5B;background:#fff;padding:0 8px}
 .oo{right:160px;top:1075px}
 ''',f'''<div class="abs card"></div><div class="abs stripe"></div><div class="abs vt"><span>{deal_en(x)}</span></div>
-<div class="abs art">{x['scene'](720,347).replace('width="720" height="347" viewBox="0 0 720 347"','width="720" height="347" viewBox="0 0 1080 520"')}</div>
+<div class="abs art">{pic(x,720,360) if x.get('photo') else x['scene'](720,347).replace('width="720" height="347" viewBox="0 0 720 347"','width="720" height="347" viewBox="0 0 1080 520"')}</div>
 <div class="abs k"><span class="kick">{st_en(x)}</span></div>
 <div class="abs h a">{x['ar']}</div>
 <div class="abs sub a">{x['type']} {deal_ar(x)} · {x['area']}</div>
@@ -204,7 +209,7 @@ def layD(x,fn):
 .pt{font:700 32px TJ,MS;direction:rtl}
 .oo{left:90px;top:1210px}
 .foot{bottom:50px}
-''',f'''<div class="abs art">{tall_scene(x)}</div><div class="abs vline"></div>
+''',f'''<div class="abs art">{pic(x,480,760,'70% center') if x.get('photo') else tall_scene(x)}</div><div class="abs vline"></div>
 <div class="abs k"><span class="kick">{deal_en(x)} · {st_en(x)}</span></div>
 <div class="abs h">{x['ar']}</div>
 <div class="abs sub">{x['area']} · {x['area_en']}</div>
@@ -232,7 +237,7 @@ def stA(x,fn):
 ''',f'''<div class="abs pill2"><span class="pill">{deal_ar(x)} · {st_ar(x)}</span></div>
 <div class="abs h a">{x['ar']}</div>
 <div class="abs sub a">{x['type']} في {x['area']}</div>
-<div class="abs art">{x['scene'](1080,520)}</div>
+<div class="abs art">{('<div style="margin:0 90px;border:1.5px solid #B99A5B;padding:12px">'+pic(x,874,470)+'</div>') if x.get('photo') else x['scene'](1080,520)}</div>
 <div class="abs pr">{money(x['price'])}</div><div class="abs pu">{unit_en(x)}</div>
 <div class="abs sp">{x['br']} · {N(x['size'])} قدم مربع</div>
 <div class="abs cw"><span class="cta">راسلنا للتفاصيل<i>DM US</i></span></div>
@@ -256,7 +261,7 @@ def stB(x,fn):
 <div class="abs sub a">{x['type']} {deal_ar(x)} · {st_ar(x)}</div>
 <div class="tg" style="left:330px;top:560px">{tag}</div>
 <div class="abs tagtxt"><b>{money(x['price'])}</b><i>{unit_en(x)}</i><span>{x['br']}</span><span style="font:500 26px MS;margin-top:10px;direction:ltr">{x['size']} SQ FT</span></div>
-<div class="abs mini">{x['scene'](1080,520).replace('width="1080" height="520"','width="1080" height="260"')}</div>
+<div class="abs mini">{('<div style="margin:0 90px">'+pic(x,900,260)+'</div>') if x.get('photo') else x['scene'](1080,520).replace('width="1080" height="520"','width="1080" height="260"')}</div>
 <div class="abs cw"><span class="cta">تبي تشوفه؟ راسلنا<i>DM US</i></span></div>
 {foot_adm()}''',story=True)
 
