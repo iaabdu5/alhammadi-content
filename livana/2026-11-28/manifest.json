@@ -39,17 +39,28 @@
   ],
   "19:30": [
    {
-    "type": "carousel",
-    "image_urls": [
-     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/post-b1.jpg",
-     "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/post-b2.jpg"
-    ],
-    "caption": "رايح تحضر إطلاق مشروع على الخارطة؟ 📝 هذي 5 كلمات بتسمعها أكيد:\nEOI إبداء اهتمام · Reservation الحجز · SPA اتفاقية البيع والشراء · Payment Plan خطة الدفع · Handover التسليم\nاسحب للشرح، واحفظ البوست قبل أي إطلاق. وعندك سؤال؟ اكتبه في التعليقات.\n\nHeading to an off-plan launch? Five words you'll hear: EOI, Reservation, SPA (Sale & Purchase Agreement), Payment Plan and Handover. Swipe for the meaning of each and save this for launch day.\n\nإرشاد عام وليس استشارة قانونية أو مالية / General guidance, not legal or financial advice. Livana.\n\n#عقارات_أبوظبي #أبوظبي #على_الخارطة #استثمار_عقاري #AbuDhabiRealEstate #OffPlan #AbuDhabi #RealEstateTips #Livana"
+    "type": "image",
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/2740bb942c6024a7920de6bc1db401934d058072/livana/listings/post-01-reeman-1br.jpg",
+    "caption": "شقة للبيع في ريمان ليفنج، الشامخة 🏡\n• غرفة وصالة\n• المساحة: 520 قدم مربع\n• الحالة: على الخارطة\n• السعر: 830,000 درهم\nللتفاصيل والمعاينة راسلنا هنا أو واتساب: +971 50 647 5663\n\nApartment for sale at Reeman Living, Al Shamkha\n• 1 Bedroom\n• Size: 520 sq ft\n• Status: Off-plan\n• Price: AED 830,000\nDM us or WhatsApp +971 50 647 5663 for details and viewings.\n\nLivana Real Estate · ADM 202501936260\n\n#عقارات_أبوظبي #أبوظبي #الشامخة #AlShamkha #للبيع #AbuDhabiRealEstate #AbuDhabi #Livana"
    },
    {
     "type": "story",
-    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/story-6-teaser-b.jpg"
+    "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/2740bb942c6024a7920de6bc1db401934d058072/livana/listings/story-01-reeman-1br.jpg"
    }
   ]
- }
+ },
+ "backup_19_30": [
+  {
+   "type": "carousel",
+   "image_urls": [
+    "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/post-b1.jpg",
+    "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/post-b2.jpg"
+   ],
+   "caption": "رايح تحضر إطلاق مشروع على الخارطة؟ 📝 هذي 5 كلمات بتسمعها أكيد:\nEOI إبداء اهتمام · Reservation الحجز · SPA اتفاقية البيع والشراء · Payment Plan خطة الدفع · Handover التسليم\nاسحب للشرح، واحفظ البوست قبل أي إطلاق. وعندك سؤال؟ اكتبه في التعليقات.\n\nHeading to an off-plan launch? Five words you'll hear: EOI, Reservation, SPA (Sale & Purchase Agreement), Payment Plan and Handover. Swipe for the meaning of each and save this for launch day.\n\nإرشاد عام وليس استشارة قانونية أو مالية / General guidance, not legal or financial advice. Livana.\n\n#عقارات_أبوظبي #أبوظبي #على_الخارطة #استثمار_عقاري #AbuDhabiRealEstate #OffPlan #AbuDhabi #RealEstateTips #Livana"
+  },
+  {
+   "type": "story",
+   "image_url": "https://raw.githubusercontent.com/iaabdu5/alhammadi-content/9bb8c8cc740c5715027d4b04290a9246de9a8deb/livana/2026-11-28/story-6-teaser-b.jpg"
+  }
+ ]
 }
